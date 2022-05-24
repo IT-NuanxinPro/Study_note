@@ -1287,7 +1287,7 @@ function Person () {
 
 ==原型总结图==
 
-​                                                   <img src="D:\Front end\中软16周\JavaScript课程\2022-3-4\20220304\原型链.png" alt="原型链" style="zoom:90%;" />
+​                                                   <img src="D:\Front end\中软16周\暖心前端笔记\Study_note\img\原型链.png" alt="原型链" style="zoom:90%;" />
 
 
 

@@ -394,7 +394,7 @@ console.log(a,b,c_val); // 1 2 3
 
 * ==**结果对比图**==
 
-![](D:\Front end\中软16周\Node.js\ESM.png)
+![](D:\Front end\中软16周\暖心前端笔记\Study_note\img\ESM.png)
 
 ## 6. 核心模块
 
@@ -1614,7 +1614,7 @@ emitterInstance.on("error",err =>console.log("发生错误",err));
 
    ```运行结果图```
 
-​          ![](D:\Front end\中软16周\Node.js\中间件.png)
+​          <img src="D:\Front end\中软16周\暖心前端笔记\Study_note\img\中间件.png" style="zoom:50%;" />
 
 * **中间件-路由**
 

@@ -70,7 +70,7 @@ const obj = {
 * **==总结==**
    * **一切都指向module.exports**
 
-![02dc826b2f0cf154a344ccbf8e7a8ed](C:\Users\Devil暖心\AppData\Local\Temp\WeChat Files\02dc826b2f0cf154a344ccbf8e7a8ed.png)
+![02dc826b2f0cf154a344ccbf8e7a8ed](https://github.com/IT-NuanxinPro/Study_note/raw/master/img/ESM.png)
 
 * **解构赋值**
 
@@ -1614,7 +1614,7 @@ emitterInstance.on("error",err =>console.log("发生错误",err));
 
    ```运行结果图```
 
-​          <img src="D:\Front end\中软16周\暖心前端笔记\Study_note\img\中间件.png" style="zoom:50%;" />
+​ https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E4%B8%AD%E9%97%B4%E4%BB%B6.png
 
 * **中间件-路由**
 

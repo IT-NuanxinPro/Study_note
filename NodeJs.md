@@ -860,7 +860,7 @@ console.log(a,b,c_val); // 1 2 3
 
    * **手写obs**
 
-   <img src="D:\Front end\中软16周\Node.js\2022-4-20\20220420\Observer.png" style="zoom: 67%;" />
+  https://github.com/IT-NuanxinPro/Study_note/commit/2d2f8707959c0ba5c376dba96b090486166b8e52
 
    ```js
    function myTv() {

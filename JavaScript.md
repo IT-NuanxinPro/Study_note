@@ -1153,7 +1153,7 @@ function Person () {
 
     * 怎么获取原型？ 
     
-       > 1.对象通过 _ _proto  _ _ 获取原型；
+       > 1.实例对象通过 _ _proto  _ _ 获取原型；
       >
       > 2.构造函数通过prototype属性获得
       >
@@ -1230,7 +1230,8 @@ function Person () {
 * **hasOwnProperty**
 
    * 判断对象是否有某个特定的属性。必须用字符串指定该属性。
-
+   * 准确来说确定某个属性是在实例上还是原型对象上，实例属性：true，原型属性：false
+   
    ```js
        console.log(car.hasOwnProperty("wheel")); //true
    	console.log(car.hasOwnProperty("color")); //true

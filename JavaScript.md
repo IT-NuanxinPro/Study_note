@@ -1287,9 +1287,7 @@ function Person () {
 
 ==原型总结图==
 
-​                                                   <img src="D:\Front end\中软16周\暖心前端笔记\Study_note\img\原型链.png" alt="原型链" style="zoom:90%;" />
-
-
+ https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E5%8E%9F%E5%9E%8B%E9%93%BE.png
 
 
 

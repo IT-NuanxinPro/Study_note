@@ -2964,3 +2964,167 @@ const canvas = document.getElementById("canvas");
 
 
 
+## 七 . Promise
+
+```test
+Promise(期约)
+三个状态:
+     Pending: 初始化状态
+     fulfilled : 兑现状态
+     Rejected :  拒绝状态
+     
+ Promise(构造器)
+    这个构造器需要传入一个参数,两个参数都是一个函数，这个函数叫做执行函数
+    执行函数时同步执行的！！！！
+    第一个参数习惯命名resolve,调用这个方法，将Pending => Fulfilled
+    第一个参数习惯命名reject,调用这个方法，将Pending => Rejected
+   注意: 这两个参数是排他性的，原因是这个Promise的状态一旦改变就不会改变 
+```
+
+```js
+// new 操作符
+//promise 构造器
+// (resolve,rejecct)=>{} 执行函数
+// p是实例
+const p = new Promise((resolve,rejecct)=>{});
+
+const p = new Promisr((resolve,reject)=>{
+   resolve();
+   reject(); // 虽然读取了这一步，但是不执行操作，没有任何效果
+})
+
+const p = new Promise((resolve, reject) => {
+
+})
+console.log("执行函数中既没有调用resolve,也没调用reject",p); // Promise { <pending> }
+
+const p_fulfilled = new Promise((resolve, reject) => {
+	resolve();
+})
+
+console.log("如果promise 被兑现,p_fulfilled为:",p_fulfilled); //Promise { undefined }
+// 在Node.js中，fulfilled会显示undefined,浏览器会正常显示
+
+const p_rejected = new Promise((resolve, reject) => {
+	reject("我忘记了")
+})
+console.log("如果promise被拒绝了,p_reject为:",p_rejected);//  Promise { <rejected> '我忘记了' }
+// 这部分后面会抛个异常错误（这个异常抛在异步事件了）
+```
+
+* **Promise.prototype.then()**
+
+```js
+//执行函数是同步的,实例p的then方法是异步的
+//只有当执行力resolve之后,then的回调函数才会执行
+console.log(1000);
+const p = new Promise((resolve, reject) => {
+	console.log(2000);
+	resolve("暖心yyds");
+	console.log(3000);
+})
+console.log(4000)
+p.then(res=>{
+	console.log(6000,"res:",res);
+})
+console.log(5000);
+//打印结果 1000 2000 3000 4000 5000 6000 ”暖心yyds“
+
+```
+
+```js
+/*
+   then在promise内声明
+   then方法有两个参数,第一个参数是成功的回调,第二个参数是失败的回调
+   Promise.prototype.then = function(onFulfilled, onRejected) {}
+   或者
+   class Promise {
+     	constructor(executor) {}
+     	then(onFulfilled, onRejected) {}
+   }
+ */
+const p_fulfilled = new Promise((resolve, reject) => {
+	resolve("暖心yyds");
+})
+p_fulfilled.then(res => {
+	console.log("兑现",res); // "兑现": 暖心yyds
+})
+
+const p_rejected = new Promise((resolve, reject) => {
+	reject("我忘记了");
+})
+// 解决不抛出异常，捕获异常错误
+第一种方式
+p_rejected.then(()=>{},(reason) => {
+	console.log("拒绝",reason);
+})
+//第二种方式
+p_rejected.then(null,reason => {
+	console.log("拒绝",reason);
+})
+```
+
+* **Promise.prototype.catch()**
+
+```js
+// 这个方法给Promise添加拒绝处理程序，这个方法只接受一个参数
+// 这个方法就是个语法糖，相当于调用Promise.prototype.then(null,reason)
+const p_rejected = new Promise((resolve, reject) => {
+	reject("我忘记了");
+})
+
+p_rejected.catch(reason => {
+	console.log("拒绝",reason);
+})
+```
+
+* **同步/异步执行的二元性**
+
+```js
+//同步代码捕获异常错误实现方式 try-catch
+// 一旦抛出异常，程序会马上终止(后续无法执行)
+console.log(1000);
+try {
+	throw new Error("暖心yyds");
+}catch (e) {
+	console.log("主动捕获错误",e);
+}
+console.log(4000);
+//打印结果 1000 主动抛出错误
+
+//异步处理方式
+Promise的reject也会抛出异常，但是这个异常有点特殊
+1.他不会终止你的程序
+2.reject的参数被异步化了
+3.try-catch 语句捕获不了该错误
+// 以下例子还会继续抛出错误，但是不会终止程序
+/*console.log(1000);
+try {
+	  const p1 = new Promise((resolve, reject) => {
+		console.log(2000);
+		reject("暖心yyds");
+		console.log(3000);
+	})
+} catch (e) {
+	console.log("主动捕获错误",e);
+}
+console.log(4000);*/
+// 打印结果: 1000 2000 3000 暖心yyds 4000 Error
+
+//解决方案:采用then方法的第二个参数,捕获错误
+//或者采用catch方法(语法糖)
+console.log(1000);
+const p2 = new Promise((resolve, reject) => {
+	console.log(2000);
+	reject("暖心yyds");
+	console.log(3000);
+})
+/*p2.then(null,reason=> {
+	console.log("主动捕获错误",reason);
+})*/
+p2.catch(reason=> {
+	console.log("主动捕获错误",reason);
+})
+console.log(4000);
+```
+

@@ -1,0 +1,117 @@
+1.HTML5由W3C和WHAT组织机构共同研发出来的，于2014年正式发布。
+2.HTML5成为了新一代网页开发标准。
+3.HTML5新特性（面试）
+    1）增加了audio和video音频播放，抛弃了Flash
+    2）新增了canvas画布（绘画，制作动画（如小游戏开发等））
+    3）地理定位
+    4）增加了离线缓存
+    5）硬件加速
+    6）Web Socket（全双工通信）
+    7）增加了本地存储
+    8）新增了一些语义化标签
+4.网页布局标签
+    header:页首
+    nav:导航栏
+    aside:侧边栏
+    main:主体
+    section:区块
+    article:文章
+    footer:页尾
+5.语义化标签
+    1)mark:高亮显示(行级)
+    2)details(描述)与summary(摘要):一般用于名词解释或用于封装一个区块等
+    3)meter:定义度量衡
+        属性:value/min/max
+    4)progress:进度条
+        属性:value/min/max
+    5)dialog:对话框或窗口
+    6)figure:用于对元素进行组合（一般用来组合一张图的标题、图片和图片描述等）
+6.HTML5多媒体
+    1)audio
+        播放音乐或音频。IE9以下的版本不支持。
+
+        a)支持的格式
+            .mp3/.ogg/.wav
+        b)属性
+            src:文件路径
+            autoplay:自动播放
+            loop:循环
+            controls:控制条
+            muted:静音
+            preload:预加载（当使用autoplay时，preload自动失效）
+    2)video
+        加载视频。IE9以下的版本不支持。
+
+        a)支持的格式
+            .mp4/.ogg/.webm
+        b)属性
+            src:文件路径
+            autoplay:自动播放
+            loop:循环
+            controls:控制条
+            muted:静音
+            preload:预加载（当使用autoplay时，preload自动失效）
+            width:宽度
+            height:高度
+            poster:海报
+    3)embed
+        嵌入内容或加载插件。
+
+        属性:
+            src:文件路径
+            width:宽度
+            height:高度
+            type:类型
+    4)canvas
+        画布。是一个容器元素。
+        注意：
+            a.单独使用canvas没有什么意义，它必须结合Javascript使用。它的具体功能体现是通过
+        Javascript体现现来的。
+            b.canvas的宽高最好不要通过css实现，而是直接使用标签属性width和height实现。
+7.HTML5常用属性
+    1）contentEditable
+        将标签转换为可编辑状态。可用于所有标签。它的值有true/false。
+    2）hidden
+        对元素进行隐藏。一般用来传值或当某个条件成立，执行内容显示。默认值为hidden。
+    3）data-*
+        用于存储页面或应用程序的私有自定义数据。一般用于传值。
+    4）multiple
+        规定输入域中可选择多个内容。用于表单组件中，如file/select。
+    5）required
+        约束表单元互在提交前必须输入值。用于表单组件中，需要结合提交按钮使用。
+    6）pattern
+        用于验证输入字段的模式。用于表单组件中，需要结合提交按钮使用。
+8.表单组件
+    1）color：颜色
+    2）email：邮箱
+    3）tel：电话号码
+    4）url：网址
+    5）number：数字
+    6）range：范围
+    7）search：搜索
+    8）date：日期
+    9）datetime：日期时间
+    10）datetime-local：本一日期时间
+    11）year：年份
+    12）month：月份
+    13）time：时间
+9.表单属性
+    1）formaction:修改action数据提交的地方
+    2）formenctype:修改表单请求的类型
+    3）formmethod:修改数据提交的方法
+    4）form:设置表单元素属于哪个表单
+    5）novalidate:不验证
+10.input属性
+    1）autocomplete:自动完成
+        用来帮助用户输入，每一次输入的内容，浏览器是否保存输入的值，以备将来使用。值有：
+    on/off，默认为on。
+        为了保护敏感数据（如用户帐号、密码等），避免本地浏览器对它们不安全存储，一般需要关闭。
+    2）autofocus:自动获焦
+    3）step:步长
+    4）multiple:多选
+    5）pattern:正则匹配
+    6）placeholder:输入提示
+    7）required:必须输入
+
+
+

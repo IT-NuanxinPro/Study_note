@@ -1,0 +1,221 @@
+1.多列（分栏）
+    1）column-count 规定元素应该被分隔的列数（栏数）。
+        column-count: number|auto;
+    2）column-gap 设置栏间距。
+        column-gap: length|normal;
+    3）column-rule 设置栏间分隔线。
+        a)column-rule-style：设置线型。
+            none 没有分隔线
+            hidden 隐藏线
+            dotted 点线
+            dashed 虚线
+            solid 实线
+            double 双线
+            groove 3D沟槽效果
+            ridge 3D脊状效果
+            inset 3D左上角阴影效果
+            outset 3D右下角阴影效果
+
+            注意：
+                3D线型在分栏中没有3D效果，当实线处理了。
+        b)column-rule-width：设置线宽。
+        c)column-rule-color：设置分隔线颜色。
+
+        简洁（复合）写法：
+            column-rule:width style color;
+    4）column-width 设置栏宽。
+        column-width: length|auto;
+    5）columns：是column-width 和 column-count 的简写方式。
+        columns: width count;
+
+2.flex弹性布局
+    CSS3 弹性盒（ Flexible Box 或 flexbox），是一种当页面需要适应不同的屏幕大小以及设备类型时确保元
+素拥有恰当的行为的布局方式。
+    目的是提供一种更加有效的方式来对一个容器中的子元素进行排列、对齐和分配空白空间。
+
+    常用的属性：
+        1）flex-direction（应用于父元素）
+            flex-direction 指定子元素在父容器中的位置。
+
+            语法：
+                flex-direction: row | row-reverse | column | column-reverse
+
+            参数：
+                row ：横向从左到右排列（左对齐），默认的排列方式。
+                row-reverse ：反转横向排列（右对齐，从后往前排，最后一项排在最前面。
+                column ：纵向排列。
+                column-reverse ：反转纵向排列，从后往前排，最后一项排在最上面。
+        2）justify-content（应用于父元素）
+            把弹性项沿着弹性容器的主轴线对齐。
+
+            语法：
+                justify-content: flex-start | flex-end | center | space-between | space-around
+
+            参数：
+                flex-start：紧凑方式左对齐（默认值）
+                flex-end：紧凑方式右对齐
+                center：紧凑方式居中对齐
+                *space-between：除了第1个和最后1个子元素外，其它子元素等分空白区域
+                *space-around：所有子元素等分空白区域
+        3）align-items（应用于父元素）
+            子元素在侧轴（纵轴）方向上的对齐方式。此属性作用于父容器。
+
+            语法：
+                align-items: flex-start | flex-end | center | baseline | stretch
+
+            参数：
+               flex-start:沿纵轴顶端对齐（默认值）
+               flex-end:沿纵轴底端对齐
+               center:沿纵轴垂直居中对齐
+               baseline:沿纵轴基线对齐
+               stretch:纵向拉伸对齐
+        4）flex-grow（应用于子元素）
+            子元素的放大比例，默认为0，即如果存在剩余空间，也不放大。
+            语法：
+                flex-grow：number;
+        5）flex（应用于子元素）
+            用于指定弹性子元素空间分配。
+            语法：
+                flex: auto | initial | none | inherit | [ flex-grow ] || [ flex-shrink ] || [ flex-basis ]
+            参数：
+                auto : 等价于 1 1 auto。
+                initial : 等价于 0 1 auto。
+                none ：等价于 0 0 auto。
+                inherit ：从父元素继承。
+
+            Tips:
+                flex可以带1-3个参数。
+                1）带1个参数
+                    a)无单位，这个数值会被当作flex-grow（放大）的值
+                    b)带单位，这个数值会被当作flex-basis（基本宽度）的值
+                    c)auto（自动宽度）|initial（初始宽度）|none（无）
+                2）带2个参数
+                    第1个参数必须是一个无单位的数值，它会被当作flex-grow的值。
+                    第2个参数：
+                        a)无单位，这个数值会被当作flex-shrink（收缩比率）的值
+                        b)带单位，这个数值会被当作flex-basis（基本宽度）的值
+                3）带3个参数
+                    第1个参数必须是一个无单位的数值，它会被当作flex-grow的值。
+                    第2个参数也必须是一个无单位的数值，它会被当作flex-shrink（收缩比率）的值。
+                    第3个参数必须是一个有效的宽度值（带单位），它会被当作flex-basis（默认基准宽度值）的值
+3.响应式布局
+    1）响应式布局概念
+        Responsive Design，在实现不同屏幕分辨率的终端上浏览网页的不同展示方式。
+        通过响应式设计能使网站在手机和平板电脑上有更好的浏览阅读体验。
+    2）响应式布局和自适应布局的区别（面试问题）
+        响应式布局只开发一套代码，通过检测视口的分辨率，针对不客户端在客户端做代码处理，来展现不同的布局和内容；
+        自适应需要开发多套界面，通过检测视口的分辨率，来判断当前访问的设备是PC端、平板、手机等，从而请求服务层，返回不同的页面。
+
+        响应式布局等同于流动网格布局，而自适应等同于使用固定分割点来进行布局。
+
+        自适应布局给出了更多的设计空间，只用考虑几种不同的状态就可以了；
+        而响应式布局要考虑上百种不同的状态，虽然有些状态差异较小，但也要考虑到。
+     3）响应式布局开发实现方法
+        a)媒体查询
+        b)百分比布局
+        c)rem布局（相对于根节点（元素）html中的字号布局）
+        d)视口单位布局(vw/vh)
+     4）响应式设计步骤
+        a)设置meta标签
+        b)通过媒体查询来设置样式
+        c)设置多种视图的宽度
+            i)宽度需要使用百分比/rem/vw$vh等
+            ii)处理图片缩放
+            iii)其它属性处理
+                如pre/iframe/video等，都要缩放其大小，table，建议不要增加padding属性，低分辨率下要使用内容居中操作。
+
+4.媒体查询
+    步骤：
+        1）设置meta标签
+            <meta name="viewport" content="width=device-width,initial-scale=1.0,maxium-scale=1.0,user-scaleable=no">
+
+            说明：
+                以上标签的内容只能被移动设备识别。
+                viewport：视口（移动端）。
+                width=device-width：宽度等于当前设备的宽度。
+                initial-scale=1.0：初始缩放比例（默认为1.0）
+                minimum-scale=1.0：允许用户缩放到的最小比例（默认为1.0）
+                maximum-scale=1.0：允许用户缩放到的最大比例（默认为1.0）
+                user-scaleable=no：用户是否可以手动缩放（默认为no）
+        2）设置IE渲染方式默认为最高版本
+            <meta http-equiv="x-ua-compatible" content="IE=Edge,chrome=1">
+
+            说明：
+                以上代码表示如果浏览器有chrome插件，将以chrome提供的V8引擎渲染页面；如果没有，将以IE
+            的最高版本渲染页面。
+        3）引入兼容的JS文件
+            <!-- [if lt IE 9]>        条件Hack
+                <script src="https://oss.maxcdn.cm/libs/html5shiv/3.7.0/html5shiv.js"></script>
+                <script src="https://oss.maxcdn.cm/libs/respond.js/1.3.0/respond.min.js"></script>
+            <![endif] -->
+
+            说明：
+                因为IE8及IE8以下版本既不支持html5，也不支持CSS3 Media，所以我们需要加载JS文件来处理这个兼容。
+                上面的代码是一个注释语句，也就是说，IE9及以上的版本不会编译这几行代码。
+        4）进入CSS3提供的媒体查询
+            a）引入外部CSS文件时使用
+                <link rel="stylesheet" href="css/screen480.css" media="screen and (max-width:480px)" >
+                    如果屏宽为480px及以下，将加载screen480.css文件。
+                <link rel="stylesheet" href="css/screen800.css" media="screen and (min-width:480px) and (max-width:800px)" >
+                    如果屏宽为480px以上且在800px以下，将加载screen800.css文件。
+                <link rel="stylesheet" href="css/screengt800.css" media="screen and (min-width:800px)" >
+                    如果屏宽为800px以上，将加载screengt800.css文件。
+
+                设备：
+                    all:所有设备
+                    screen:PC端显示器
+                    print:打印机或打印预览图
+                    handheld:便携设备
+                    tv:电视
+                    speech:音频合成器
+                    braille:盲人点触设备
+                    embossed:盲人打印机
+                    projection:投影设备
+                    tty:固定密度字母栅格设备
+
+                    only:用来排除不支持媒体查询的浏览器
+            b）在style标签中用@media定义
+                如：
+                     @media screen and (max-width: 480px){
+                        .menu{
+                            display: none;
+                        }
+                     }
+5.web字体
+    开发者引入外部字体。
+
+    语法：
+        @font-face {
+            font-family: 字体名;
+            src: url("字体文件.ttf") format("字体文件格式以处理浏览器兼容"),url(字体文件.woff) format(...),...;
+        }
+
+    说明：
+        可以同时引入多个字体文件，字体一样，文件的扩展名不一样，目的是为了处理浏览器兼容。
+
+        eg:
+             @font-face {font-family: "iconfont";
+                src: url('iconfont.eot?t=1585647107785'); /* IE9 */
+                src: url('iconfont.eot?t=1585647107785#iefix') format('embedded-opentype'), /* IE6-IE8 */
+                url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAScAAsAAAAACTAAAAROAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqFUIRIATYCJAMUCwwABCAFhG0HSBvUByMRNntQMpL9c4HDS8ZfIO5Y1qSPewjh3vAB27QtWuSZ/vo2fXsLTLhNHImbHhWRS+uQekS1pkLN/4wAWN79HjSSRpTtFiWRkDQt6GKw35w/YDthItSILHpUeG1zVEhfmm770vwGCJAh/ce9qpkTbD77Frc5FiaUC2BoAsWCe3Tawoq1gNhh7OIyngYIoK3ZQrdDbCooiGnrEIDuTlIECjGzuISN5Lo052gs+EBTHr6pywB2uH+P/rAUoCQRbWsiE1YKgXKePAmz/1m42yiQ9OcEAOYUwIAtAA7okeueBdhP28JKaTbHCQBouVDY1zQD+VGe9P8/oXxF2lJ3A6qXf7wYlNLUihAfmOEg55kIoJAbIAAjj0AAQp4kvTFqLjpCA3zgDUA5jWbqk7gCgfCglsLnjxoEvf7vpje0oLt3F5OHdZtux5oKq7tpOrySajri1iEiO6STVnUnjMhcxDXiBu2eEesDm0U1Izot2jUNYlR+cl5lJU1LqxEuryFEViWkFlb1mtJSUlnJVhGniHQ1CSoHExQkFTGZ2l6armQK6moFgspO2HT2rijdXNot6iApFt+7l97P27vuGLGNurI7wq46wbzOXrZPNlDebyitLq+RVbGVEklNrFkqKK3UqhWWVWW/T1QkFXU360iY+pZDU1pldaygtLcIE4pgwpQ673cL1tw4h0pBTiJdFBFX+gIOAt9y1q8h1d4B5Xg4BM3m58aLPffM0x5PV5q3PWjMwsMnOTtO6MdoxBxU9wr8ODiopKFlUnKLfkriyRfSDL4znjylm5OX0F7frBRRIkMYHiKWY99sVcq+OygDjyESnsvz9XNdVltal/yMZdDWQFNBdoxge2GqkmGRKI2yVGL4zbuDMsxDt0AI/Uwx0TnU1GbHpwNpnA3uvbw9npBmpKt+dHQVWUqWQMjaa3sPG281uvTp5lWErtrbLhltNT4Maf6CPwa+3x2K0dU/fPxPvkjYdN3yWcJmCtrjIw5GvJusuP4B7KyYfAfLwAEA4P8H3IwtXS6LjTDLPU49xcHZUXwDJ/0yy9icsS5Q8f2tQK5V38M+B4xC/1kOtBO/d43akh9EUrODI8s0CzcWW02x6OX63lo1JfWVwG/hV/e0H62wdjUAkluEQMmsAMtt0Bz8Drgqe+DJHYG2FXGamCwALIgLwNpGAIHeCIRaP4j0rqBj/BNILH2GVB+G0hnp9a8kzHO9LaMSjCD4AxdSpg2b9LzaE5oyURyVuZwbcuFiMLZ3TOaOmCH3saP4mImIBs2UwgE8D5OEIGfyGMrAiuSboQOT902DkNJKTwiGFIEiIPAHOCGS0XZv0Uv9/gkySgmFS9pKwjeIFdzkYGxgVAN9VGe12s5lduHDmBBC41UaIylwgE6U6GkC8vxFHgqJAdsimdsYom66rnowvja9xmMA0LSruAGFMOIgLuIBfqqs/XPK2e8Wbe9UJlQ2LKVYqQAAAA==') format('woff2'),
+                url('iconfont.woff?t=1585647107785') format('woff'),
+                url('iconfont.ttf?t=1585647107785') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+                url('iconfont.svg?t=1585647107785#iconfont') format('svg'); /* iOS 4.1- */
+             }
+
+6.iconfont图标字体
+    由阿里巴巴提供的一种图标字体。
+    步骤：
+        1）进入官网http://iconfont.cn，注册并登录
+        2）创建一个项目
+        3）添加图标到购物车
+        4）将购物车中的图标添加到项目中
+        5）下载iconfont文件，解压后，将部分文件复制到我的网页项目中
+        6）使用字体图标前，先引入iconfont.css文件
+        7）使用字体图标方法：
+            a)用类名
+                <div class="iconfont icongerenzhongxin"></div>
+            b)用unicode值（微信小程序开发不支持这种写法）
+                <div class="iconfont">&#xe62f;</div>
+
+

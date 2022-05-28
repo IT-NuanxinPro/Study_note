@@ -1,0 +1,80 @@
+1.标签由标签名、标签属性和文本内容三部分组成（注意：单标签没有文本内容）。
+2.标签属性是对标签的一种描述方式。
+3.标签属性分通用属性、自有属性和自定义属性。
+4.通用属性:所有标签都具有的属性（除<br />标签外）。
+    通用属性有：
+        id：用来给标签取一个唯一的名称。id名称在一个网页必须是唯一的。
+        class：用来给标签取一个类名。
+        style：用来设置该标签的行内样式。
+        title：当鼠标移到该标签，所显示的提示内容。
+5.自定义标签属性：通常用来传值或用于图片懒加载等方面。
+    格式：data-*
+    <img data-src="图片名" alt="提示文本"/>
+    <p data-id="goodsid">...</p>
+6.table主要用于呈现格式化数据。表格是由行和列组成。
+    格式：
+        <table>
+            <tr>
+                <th></th>
+                <td></td>
+                …
+            </tr>
+            ...
+        </table>
+7.table属性
+    border:表格边框，默认单位是像素
+    width:表格宽度，默认单位是像素
+    align:表格对齐方式（left（默认）/center/right）
+    cellpadding:单元格文本与边框的距离
+    cellspacing:单元格边框间距
+8.跨行/跨列属性主要用来绘制复杂表格。
+    rowspan:跨行
+    colspan:跨列
+9.完整表格组成：caption（标题)、thead（表头）、tbody（表体）和tfoot（表尾）四部分组成。
+10.form表单标签是所有标签最核心标签之一。它是用来实现前后端交互的一个重要标签。
+    常用属性：
+        name:表单名称
+        action:表单数据提交的地方(通常是一个后台文件名(.jsp/.php/.asp/.aspx/.py等），或网址）。如果是#，表示提交到当前文件下。
+        method:前端提交数据到后端的方法，主要有：get和post,默认的是get。
+11.表单元素分为：
+    1）input类：主用用来输入，选择或发出指令。
+        type:text/password/radio/checkbox/file/button/image/submit/reset
+            a.text:单行文本输入框 type="text"可以不写，默认值。
+                属性：placeholder(提示）/name（命名）/minlength和maxlength（最少/多输入的字符个数）/disabled（失效）/readonly（只读）
+                      value（默认值）/pattern（正则匹配）
+            b.password:密码框 属性与text一样
+            c.radio:单选钮，通常是两项以上。常用属性有：name（必须要有）/value/checked（选中）/disabled（失效）/readonly（只读）
+            d.checkbox:复选框，可以用来选择0项、1项或多项。
+                常用属性有：name（必须要有）/value/checked（默认选中）/disabled（失效）/readonly（只读）
+            e.file:文件上传按钮
+            f.button:普通按钮，通常用它去调用脚本代码。
+                常用属性有：value（按钮的标题）/disabled（失效）
+            g.image:图片按钮，用法与button一样。有一个特殊属性：src(用来加载提示图片，用它替换了value)
+                它有提交功能，与submit功能一样。
+            h.submit:提交按钮，用来将表单数据提交到后台。
+                常用属性有：value（按钮的标题）/disabled（失效）
+            j.reset:重置按钮，将表单所有组件输入的内容全部清空，还原为初始状态。
+                常用属性有：value（按钮的标题）/disabled（失效）
+    2）textarea类
+        文本域（也可以叫多行文本框），主要用于输入大批量的文本内容。
+        常用属性：name/id/cols(列数)/rows(行数)/placeholder/minlength/maxlength/required(必须输入)/value
+    3）select类
+        下拉列表框，默认用于单项选择。用option呈现每个选项。
+        multiple属性：表示可以多选，这时的下拉列表框变成了列表框
+        size:最多显示的行数
+    4）button类
+        普通按钮，具有提交功能。可以单独使用，不写在form元素中；如果写在form中，有提交功能。
+12.iframe:框架集，是用来将多个网页文件组合成一个文件。
+    常用属性：
+        name:框架名
+        src:引入的外部html文件
+        scrolling:滚动条(yes/no/auto)
+        width:宽度(%/px)
+        height:高度(%/px)
+        frameborder:是否有边框(1/0)
+        marginheight:框架离顶部和底端的距离(%/px)
+        marginwidth:框架离左右的距离(%/px)
+
+        注意：
+            在实际开发，尽量减少使用iframe，因为它破坏了前进和后退功能，且不利于SEO。
+

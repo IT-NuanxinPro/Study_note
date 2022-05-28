@@ -1,0 +1,106 @@
+1.什么是浮动？
+    浮动就是让块级标签不独占一行。目的（使用场景）：把块级标签元素可以排在一行上。
+2.浮动的原理
+    就是让元素脱离文档流，不占用标准流。
+3.float的属性值：
+    left:左浮动
+    right:右浮动
+    none:默认值，不浮动
+4.浮动后，后面的元素不管是块级还是行级元素，不会显示在下一行。
+5.清除浮动
+    目的：让后面的元素自动掉到下一行。
+    方法：
+        1）添加空标签，并设置样式：clear:both;
+            clear:left;  清除左浮动
+            clear:right; 清除右浮动
+            clear:both;  清除左右浮动
+            clear:none;  左右浮动都不清除
+        2）在要清除浮动的父级添加样式：overflow:hidden;
+            overflow:hidden;  超出部分隐藏，也可以用来实现清除浮动。
+        3）在要清除浮动的父级添加伪元素，并设定样式：
+            父元素:after{
+                content:"";
+                display: block;
+                clear:both;
+            }
+
+    注意：在实际项目开发中，我们一般首先第2种方案。
+6.CSS盒子模型
+    每个元素都是一个盒子，一个盒子由margin（外边距），border（边框线）,padding（内边距）和content（内容）组成。
+    IE的盒子中的content又由padding和content组成。
+
+    区别外边距和内边距是以边框为参照。
+
+    系统默认外边距为8px。
+    1）外边距(margin)：指元素边框线之外的距离。
+        margin-left:左边距
+        margin-right:右边距
+        margin-top:上边距
+        margin-bottom:下边距
+        margin:可用来设置任意一个边的边距，可以带1至4个参数。
+            1个(apx)：表示上下左右都有这样的外边距apx
+            2个(apx bpx)：表示上下外边距为apx，左右外边距为bpx
+            3个(apx bpx cpx)：表示上外边距为apx，下外边距为cpx，左右外边距为bpx
+            4个(apx bpx cpx dpx)：表示上为apx,右为bpx,下为cpx,左为dpx
+    2）内边距（padding）：指元素的文本内容与边框之间的距离。
+        它的用法与margin完全一样。
+    3）边框(border)
+        border-width:边框线宽度
+        border-style:边框线样式
+        border-color:边框线颜色
+
+        复合写法（简写）：
+            border:border-width border-style border-color;
+            注意：border-width border-style border-color这三个参数没有位置之分。
+7.盒子的真实尺寸
+    盒子宽度 = width + padding左右 + border左右
+    盒子高度 = height + padding上下 + border上下
+8.display属性：用来设置元素的显示方式。
+    属性值：
+        none:不显示元素
+        block:块显示，在元素前后设置换行符。目的：将行级标签转换为块级标签（因为行级标签不识别宽高，
+            而块级标签识别，转换后，行级标签也可以设置宽高了）
+        inline:行内显示，将块级标签转换为行级标签。
+        inline-block;将块级或行级标签转换为行内块级标签。
+9.table样式
+    table一般不用来布局，主要用来格式化数据。
+    属性：
+        width:宽度
+        height:高度
+        border-collapse:collapse; 单线边框
+        border:边框线
+    td,tr属性：
+        width:宽度
+        height:高度
+        border:边框线
+        text-align:文本左右对齐(left(默认)/center/right)
+        vertical-align:文本垂直对齐(top/middle(默认)/bottom)
+10.列表样式
+    不是描述性的文本的任何内容都可以认为是列表。比如：菜单、商品列表等。
+    1）列表类型
+        无序(ul)、有序(ol)和自定义列表(dl)。
+        ul和ol的列表项都是用li表示的，而dl是由一个dt和一个或多个dd组成的。
+        dl一般用来设定一个定义，比如名词解释等。dt：标题,dd：描述，用来对dt的内容进行解释并说明的。
+    2）样式(用来修改标识类型)
+        list-style-image:用图像表示标识
+        list-style-position:标识的位置(inside/outside(默认))
+        list-style-type:标识类型
+
+        简写：
+            list-style:list-style-image list-style-position list-style-type;
+            list-style的值可以按任意顺序列出，而且可以任意省略，只要提供一个值，其它的都自动默认。
+
+        list-style-type的属性值：
+            a)无序
+                disc(默认)/circle/square
+            b)有序
+                decimal(默认)/decimal-leading-zero/lower-roman/upper-roman/lower-alpha/upper-alpha/
+                lower-greek/lower-latin/upper-latin...
+            有序和无序：
+                none
+11.轮播图
+    作用：主要用于产品或公司相关宣传。
+    组成：
+        1）轮播的组图（至少两张以上，不能太多）
+        2）控制器
+        3）计数器

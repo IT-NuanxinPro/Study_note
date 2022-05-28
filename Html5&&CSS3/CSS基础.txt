@@ -1,0 +1,105 @@
+1.CSS:层叠样式表，用来美化网页的。做到结构（HTML）和表现（CSS）分离。
+2.基本语法：
+    选择器 {
+        属性: 属性值;
+    }
+3.CSS引用方式：行间样式、内部样式、外部样式、导入外部样式。
+    行间样式：直接在标签上书写样式。
+    内部样式：在文件的内部书写样式。
+        <style type="text/css">
+            样式内容
+        </style>
+    外部样式：（1）先创建一个CSS文件；（2）再用link标签引入这个文件。
+    导入外部样式：（1）先创建一个CSS文件；（2）在style标签中用import导入这个样式文件。
+
+    以上四种CSS引用方式的区别：
+        行间样式只作用于当前标签；而内部样式作用于当前文件；外部样式可以被多个HTML文件引用。
+        在实际项目开发中，最好使用外部样式。
+        外部样式分为link引入和import引入两种方式。这两种方式区别：
+            1）link是XHTML标签，除了加载CSS外，还可以定义RSS等其他事务；@import属于CSS范畴，只能加载CSS。
+            2）link引用CSS时，在页面载入时同时加载；@import需要页面网页完全载入以后加载。
+            3）link是XHTML标签，无兼容问题；@import是在CSS2.1提出的，低版本的浏览器不支持。
+            4）link支持使用Javascript控制DOM去改变样式；而@import不支持。
+4.CSS选择器分类：
+    1）*：匹配html中所有元素（注意：*的性能差，因为它要匹配所有元素，所以在开发时，不建议使用）
+    2）标签选择器：用来匹配对应的标签
+    3）类选择器：用来选择class命名的标签
+    4）ID选择器：用来选择用id命名的标签
+    5）派出选择器：根据上下文来确定选择的标签
+    6）伪类选择器
+    7）伪元素选择器
+5.选择器的分组
+    让多个选择器（元素）具有相同的样式，一般用于设置公共样式。
+6.选择器的继承
+    子元素可以继承父元素的样式，反之不可以。
+7.样式权重
+    !important(10000)>内联样式(1000)>id选择器(100)>类、伪类和伪元素选择器(10)>标签选择器(1)
+
+8.CSS字体
+    1)font-size:字号(px/%)
+    2)font-family:字体
+    3)font-style:文字样式(normal/italic/oblique)
+    4)font-weight:文字加粗(normal/bold/bolder/lighter/100-900)
+    5)line-height:行高(px/数字/em等)
+    6)color:文字的颜色(颜色的单词/rgb()->r:0-255,g:0-255,b-0-255/16进制(以#开头，后跟6位(#rrggbb)或3位(#rgb)16进制数）
+    7)text-decoration:文字修饰(none/underline/overline/line-through)
+    8)text-align:文本对齐方式(left/right/center)
+    9)text-transform:字母大小写(capitalize/uppercase/lowercase/none)
+    10)text-indent:文本缩进(px/em/%/pt等)
+
+    Tip:
+        font复合属性：
+            font:font-style font-variant font-weight font-size/line-height font-family;
+            注意：
+                1）属性值的位置顺序
+                2）除了font-size和font-family之外，其它任何一个属性值都可以省略
+                3）font-variant：normal/small-caps（让大写字母变得小一些）
+9.CSS背景
+    1)background-color:背景色(transparent/color)
+    2)background-image:背景图(none/url)
+    3)background-repeat:背景图像铺排方式(repeat/no-repeat/repeat-x/repeat-y)
+    4)background-position:设置对象的背景图像位置({x-number | top | center | bottom } {y-number | left | center | right })
+    5)background-attachment:背景图像滚动位置(scroll/fixed)
+    6)background:设置背景的复合写法
+        background: color image repeat attachment position
+10.CSS伪类选择器
+    伪类：专门用来表示元素的一种特殊状态。
+    常用伪类选择器：
+        1)a标签的伪类：
+            :link/:visited/:hover/:active
+        2):focus 获得焦点
+        3):first-child/:last-child/:nth-child(number)
+11.属性选择器
+    [属性名]:包含有指定属性名的元素（常用）
+    [属性名=值]:属性名的值为指定值的元素（常用）
+    [属性名~=值]:属性名的值包含指定值的元素
+    [属性名^=值]:属性名的值以指定值的开头的元素
+    [属性名$=值]:属性名的值以指定值的结尾的元素
+12.关系选择器
+    1)空格：后代选择器
+    2)>：只选择儿子元素
+    3)+：兄弟选择
+13.CSS伪元素
+    1）CSS伪元素与伪类区别：
+        css引入伪类和伪元素概念是为了格式化文档树以外的信息。也就是说，伪类和伪元素是用来修饰不在文档树中的部分。
+
+        伪类用于当已有元素处于的某个状态时，为其添加对应的样式，这个状态是根据用户行为而动态变化的。
+        它只有处于dom树无法描述的状态下才能为元素添加样式，所以将其称为伪类。
+
+        伪元素用于创建一些不在文档树中的元素，并为其添加样式。比如说，我们可以通过:before来在一个元素前增加一些文本，
+        并为这些文本添加样式。虽然用户可以看到这些文本，但是这些文本实际上不在文档树中。
+
+    2）伪元素&伪类的特点：
+        伪元素和伪类都不会出现在源文档或者文档树中
+        伪类允许出现在选择器的任何位置，而一个伪元素只能跟在选择器的最后一个简单选择器后面
+        伪元素名和伪类名都是大小写不敏感的
+        有些伪类是互斥的，而其它的可以同时用在一个元素上。（在规则冲突的情况下，常规层叠顺序决定结果）
+
+    3）:before/:after/:first-letter/:first-line : 前面可以是1个冒号也可以是双冒号
+        ::selection/::placeholder/::backdrop : 前面只能是双冒号
+
+
+
+
+
+

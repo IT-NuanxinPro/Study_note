@@ -3001,6 +3001,8 @@ console.log("执行函数中既没有调用resolve,也没调用reject",p); // Pr
 const p_fulfilled = new Promise((resolve, reject) => {
 	resolve();
 })
+//等价于
+ =>  const p_fulfilled = Promise.resolve();
 
 console.log("如果promise 被兑现,p_fulfilled为:",p_fulfilled); //Promise { undefined }
 // 在Node.js中，fulfilled会显示undefined,浏览器会正常显示
@@ -3008,6 +3010,7 @@ console.log("如果promise 被兑现,p_fulfilled为:",p_fulfilled); //Promise { 
 const p_rejected = new Promise((resolve, reject) => {
 	reject("我忘记了")
 })
+=> const p_rejected = Promise.reject()
 console.log("如果promise被拒绝了,p_reject为:",p_rejected);//  Promise { <rejected> '我忘记了' }
 // 这部分后面会抛个异常错误（这个异常抛在异步事件了）
 ```
@@ -3126,5 +3129,262 @@ p2.catch(reason=> {
 	console.log("主动捕获错误",reason);
 })
 console.log(4000);
+```
+
+* **期约连锁**
+
+```js
+// 因为每个期约实例的方法都会返回一个新的期约对象，而这个新期约又有自己的实例方法。所以构成了“期约连锁”
+
+Promise.resolve(1000).then(res=>{
+    console.log(res);
+    return 2000
+}).then(res=>{
+    console.log(res);
+    return 3000
+}).then(res=>{
+    console.log(res)
+})
+
+// 实现 3s的倒计时（每隔一秒）
+const p1 = new Promise((resolve, reject) => {
+	 console.log("倒计时",5);
+	 setTimeout(resolve, 1000);
+ })
+
+p1.then(()=>new Promise((resolve, reject)=> {
+	console.log(4);
+	setTimeout(resolve,1000);
+})).then(()=>new Promise((resolve, reject)=> {
+	console.log(3);
+	setTimeout(resolve,1000);
+})).then(()=>new Promise((resolve, reject)=> {
+	console.log(2);
+	setTimeout(resolve,1000);
+})).then(()=>new Promise((resolve, reject)=> {
+	console.log(1);
+	setTimeout(resolve,1000);
+})).then(()=>console.log("倒计时结束"));
+
+// 优雅写法
+function countDown(second) {
+	return new Promise((resolve, reject) => {
+		console.log(second);
+		setTimeout(resolve, 1000);
+	})
+}
+
+console.log("倒计时");
+countDown(3)
+		.then(()=>countDown(2))
+		.then(()=>countDown(1))
+		.then(()=>console.log("倒计时结束"));
+
+```
+
+* **Promise.all**
+
+> ```
+> 等待所有的promise完成，返回一个新的promise，
+> 当所有的promise完成时，返回一个数组，数组中的每一项都是promise的结果
+> 如果有一个拒绝的,那么p_all的then方法中第二个参数或者catch方法的参数会被执行
+> 如果有多个拒绝的,以状态出现最早的为准
+> 如果有一个未兑现其他都是兑现,那么p_all对应的then或者catch方法的参数不会被执行
+> 如果数组中传入的不是promise,那么会被转换成一个promise
+> ```
+
+```js
+const p1 = Promise.resolve(1000);
+
+const p2 = new Promise((resolve, reject)=>{
+	// setTimeout(()=>resolve(2000), 3000);
+	// setTimeout(()=>reject(2000), 3000);
+	// reject(2000);
+	resolve(2000);
+})
+
+const p3 = Promise.resolve().then(()=>3000);
+
+// const p4 = Promise.reject(4000);
+
+const p5 = 1;
+
+const p_all = Promise.all([p1, p2, p3, p5]);
+
+p_all.then(res=> console.log(res))
+	.catch(err=> console.log(err));
+```
+
+* **Promise.race**
+
+> ```text
+> Promise.race([promise1,promise2...])
+> Promise.race 结果以数组中最先兑现/拒绝的结果为准
+> ```
+
+```js
+const p1 = Promise.resolve().then(()=>{
+	return new Promise((resolve,reject)=>{
+		setTimeout(()=>resolve(1),2000)
+	})
+})
+
+const p2 = new Promise((resolve,reject)=>{
+	setTimeout(()=>resolve(2),1000)
+})
+
+// const p3 = Promise.reject(3);
+
+const p_race = Promise.race([p1,p2]);
+
+p_race.then(res=>console.log(res))
+      .catch(err=>console.log("捕获",err));
+```
+
+* **EventLoop(宏任务和微任务)**
+
+ <a>![browser-eventloop](https://segmentfault.com/img/remote/1460000016278118)</a>
+
+* **宏任务**
+   * **setTimeout**
+   * **setInterval**
+   * **setImmediate** (Node独有)
+   * **requestAnimationFrame** (浏览器独有)
+* **微任务**
+   - **process.nextTick** (Node独有)
+   - **Promise**
+   - **Object.observe**
+   - **MutationObserver**
+
+> 1. 执行全局Script同步代码，这些同步代码有一些是同步语句，有一些是异步语句（比如setTimeout等）；
+> 2. 全局Script代码执行完毕后，调用栈Stack会清空；
+> 3. 从微队列microtask queue中取出位于队首的回调任务，放入调用栈Stack中执行，执行完后microtask queue长度减1；
+> 4. 继续取出位于队首的任务，放入调用栈Stack中执行，以此类推，直到直到把microtask queue中的所有任务都执行完毕。
+> 5. **注意，如果在执行microtask的过程中，又产生了microtask，那么会加入到队列的末尾，也会在这次循环执行**；
+> 6. microtask queue中的所有任务都执行完毕，此时microtask queue为空队列，调用栈Stack也为空；
+> 7. 取出宏队列macrotask queue中位于队首的任务，放入Stack中执行；
+> 8. 执行完毕后，调用栈Stack为空；
+
+==**暖心总结重点**==
+
+> 1. **宏队列macrotask一次只从队列中取一个任务执行，执行完后就去执行微任务队列中的任务；**
+> 2. **微任务队列中所有的任务都会被依次取出来执行，直到microtask queue为空；**
+
+
+
+* **经典面试题**
+
+```js
+setTimeout(console.log,0,4); //这种写法 => setTimeout(()=>console.log(4),0);
+
+new Promise((resolve,reject)=>{
+	console.log(1);
+	for(var i = 0;i<10000;i++){
+		i ==999 &&resolve();
+	}
+	console.log(2);
+}).then(()=>console.log(5));
+
+ console.log(3);
+
+// 打印结果
+/*
+1
+2
+3
+5
+4
+*/
+```
+
+```js
+console.log(1);
+setTimeout(()=>{
+	console.log(2);
+  new Promise((resolve,reject)=>{
+		console.log(7);
+		resolve();
+	}).then(()=>console.log(8));
+},1000);
+
+setTimeout(()=>{
+	 console.log(10);
+	 new Promise((resolve,reject)=>{
+		console.log(11);
+		resolve();
+	}).then(()=>console.log(12));
+},0);
+
+ new Promise((resolve,reject)=>{
+	console.log(3);
+	resolve();
+}).then(()=>console.log(4))
+		 .then(()=>console.log(9));
+
+console.log(5);
+
+//打印结果 1 3 5 4 9 10 11 12 2 7 8
+```
+
+```js
+console.log(1);
+
+setTimeout(() => {
+  console.log(2);
+  Promise.resolve().then(() => {
+    console.log(3)
+  });
+});
+
+new Promise((resolve, reject) => {
+  console.log(4)
+  resolve(5)
+}).then((data) => {
+  console.log(data);
+})
+
+setTimeout(() => {
+  console.log(6);
+})
+
+console.log(7);
+
+// 1 4 7 5 2 3 6
+```
+
+```js
+console.log(1);
+
+setTimeout(() => {
+  console.log(2);
+  Promise.resolve().then(() => {
+    console.log(3)
+  });
+},0);
+
+new Promise((resolve, reject) => {
+  console.log(4)
+  resolve(5)
+}).then((data) => {
+  console.log(data);
+  
+  Promise.resolve().then(() => {
+    console.log(6)
+  }).then(() => {
+    console.log(7)
+    
+    setTimeout(() => {
+      console.log(8)
+    }, 0);
+  });
+})
+
+setTimeout(() => {
+  console.log(9);
+})
+
+console.log(10);
+
+// 1 4 10 5 6 7 2 3 9 8
 ```
 

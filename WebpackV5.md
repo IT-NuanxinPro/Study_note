@@ -214,6 +214,7 @@
    
 
 
+
    - chunkFilename
 
       > output.chunkFilename 配置无入口的 Chunk 在输出时的文件名称。 chunkFilename和上面的 filename 非常类似，但 chunkFilename 只用于指定在运行过程中生成的 Chunk 在输出时的文件名称。会在运行时生 Chunk 的常见场景包括：使用 CommonChunkPlugin 、使用import （"path/to/module"） 动态加载等。 chunkFilename 支持和 filename 一致的内置变量。  
@@ -832,6 +833,8 @@
 
    {
       devtool:'source-map'
+    // devtool:"eval-cheap-source-map",   // mode:"development"
+    // devtool:"nosources-source-map",   // mode:"production"
    }
 
    ```
@@ -839,3 +842,48 @@
    > 在开发环境下将 devtool 设置成 cheap-module-eval-source-map 因为生成这种 Source Map 的速度最快，能加速构建。由于在开发环境下不会做代码压缩，所以在 Source Map 中即使没有列信息，也不会影响断点调试。  
 
    > 在生产环境下将 devtool 设置成 hidden-source-map ，意思是生成最详细的Source Map ，但不会将 Source Map 暴露出去。由于在生产环境下会做代码压缩，一个JavaScript 文件只有一行，所以需要列信息。  
+
+## 热部署和热替换
+
+> ```
+> 热部署(liveReload): liveReload:true
+> 默认属性是true,平常配置也不会改变
+> 当src摸板页面被改变时,devServer 默认将"整个"项目重新构建
+> liveReload会通过ws的方法主动通知浏览器加载页面
+> 
+> 热替换(hmr):hot:true(面试经常问到的)
+>            在devServer V4 之前 默认值是false
+>            V4.x之后,默认值是true
+>            当src中非js文件改变时,devServer 仅会将修改的文件单独重新构建
+>            当src中js文件改变时,devServer 默认将"整个"项目重新构建
+>            liveReload会通过ws的方法主动通知浏览器加载页面
+>  
+>  如果想修改js文件也实现hmr热替换,我们需要使用accept方法
+>  
+>  
+> 注意：当修改webpack.config.js文件时，都不会引发自动构建或热部署
+> ```
+
+```js
+// index.js
+// ESM
+if(import.meta.webpackHot){
+    console.log("====开启了hmr模式=====")
+    
+    // 第一种: 如果你想让当前这个js文件支持hmr,accept这个只能接受一个参数,这个参数就是处理错误的回调函数
+   /* import.meta.webpackHot.accept("./a.js",() => {
+    })*/
+    
+    // 第二种，如果你想外部文件支持hmr，accept可以接受3个参数，
+    //  第一个参数 外部文件的路径
+    //  第二个参数 是hmr生效之后的回调函数
+    //  第三个参数 和第一种情况一样，处理错误的回调函数
+    
+    import.meta.webpackHot.accept("./a.js",() => {
+        console.log(">>>>>>> a.js hmr 成功了")
+    },(err) => {
+        console.log(">>>>>>> ",err)
+    })
+}
+```
+

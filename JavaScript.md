@@ -3392,7 +3392,7 @@ console.log(10);
 
 * **NodeJS中宏任务和微任务**
 
-![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\2673283235-5b8f73ef670c4_fix732.png)
+![](https://image-static.segmentfault.com/267/328/2673283235-5b8f73ef670c4_fix732))
 
 - **timers阶段**：这个阶段执行**==setTimeout==**和==s**etInterval**==预定的callback
 - **I/O callback阶段**：执行除了close事件的callbacks、被timers设定的callbacks、setImmediate()设定的callbacks这些之外的callbacks
@@ -3421,7 +3421,7 @@ console.log(10);
 > 1. Next Tick Queue：是放置**process.nextTick(callback)**的回调任务的
 > 2. Other Micro Queue：放置其他microtask，比如**Promise**等
 
-![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\1460000016278121.png)
+![](https://image-static.segmentfault.com/342/127/3421275730-5b0e9a1df0600_fix732)
 
 
 
@@ -3433,13 +3433,13 @@ console.log(10);
 
 
 
-![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\1460000016278122.png)
+![](https://image-static.segmentfault.com/250/463/250463478-5b8f73ef31d0a_fix732)
 
 
 
 
 
-![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\1460000016278123.png)
+![](https://image-static.segmentfault.com/317/086/3170862670-5b8f73ef33f88_fix732)
 
 
 
@@ -3471,7 +3471,7 @@ setImmediate 对比 process.nextTick
 >
 > Node 在新版本中，也是每个 Macrotask 执行完后，就去执行 Microtask 了，和浏览器的模型一致
 
-![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\1460000022213423.png)
+![](https://image-static.segmentfault.com/690/666/690666428-5ab0a22b5cbca_fix732)
 
 * **面试题练习**
 

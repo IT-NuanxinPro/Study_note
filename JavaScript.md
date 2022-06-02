@@ -1540,7 +1540,30 @@ let NOW = new Date();
    document.getElementById("ex").innerHTML =`这是${res_month}月份中第${count}个星期${res_day}`;}
    ```
 
+* **面试题**
 
+   ```js
+   //  要求写一个获取年月日时分秒的函数,返回的格式如下:2022-01-07 08:08:08
+   function getDateTime(){
+       let data = new Date(),
+           year = data.getFullYear(),
+           month = data.getMonth() + 1,
+           day = data.getDate(),
+           hour = data.getHours(),
+           minute = data.getMinutes(),
+           second = data.getSeconds();
+   
+       month = month < 10 ? '0' + month : month;
+       day = day < 10 ? '0' + day : day;
+       hour = hour < 10 ? '0' + hour : hour;
+       minute = minute < 10 ? '0' + minute : minute;
+       second = second < 10 ? '0' + second : second;   
+   
+       return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
+   }
+   ```
+
+   
 
 
 ###3.6 RegExp
@@ -3394,40 +3417,40 @@ console.log(10);
 
 ![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\2673283235-5b8f73ef670c4_fix732.png)
 
-- **timers阶段**：这个阶段执行**==setTimeout==**和==s**etInterval**==预定的callback
-- **I/O callback阶段**：执行除了close事件的callbacks、被timers设定的callbacks、setImmediate()设定的callbacks这些之外的callbacks
-- **idle, prepare阶段**：仅node内部使用
-- **poll阶段：获取新的I/O事件**，适当的条件下node将阻塞在这里
-- **check阶段**：执行**==setImmediate==**()设定的callbacks
-- **close callbacks阶段**：执行socket.on('close', ....)这些callbacks
+- **timers阶段**:这个阶段执行**==setTimeout==**和==s**etInterval**==预定的callback
+- **I/O callback阶段**:执行除了close事件的callbacks、被timers设定的callbacks、setImmediate()设定的callbacks这些之外的callbacks
+- **idle, prepare阶段**:仅node内部使用
+- **poll阶段:获取新的I/O事件**,适当的条件下node将阻塞在这里
+- **check阶段**:执行**==setImmediate==**()设定的callbacks
+- **close callbacks阶段**:执行socket.on('close', ....)这些callbacks
 
 
 
 * **NodeJS中宏队列主要有4个**
 
-> 回调事件主要位于4个macrotask queue中：
+> 回调事件主要位于4个macrotask queue中:
 >
 > 1. **Timers Queue**
 > 2. IO Callbacks Queue
 > 3. **Check Queue**
 > 4. Close Callbacks Queue
 >
-> 这4个都属于宏队列，但是在浏览器中，可以认为只有一个宏队列，**所有的macrotask都会被加到这一个宏队列中**，但是在NodeJS中，**不同的macrotask会被放置在不同的宏队列中。**
+> 这4个都属于宏队列,但是在浏览器中,可以认为只有一个宏队列,**所有的macrotask都会被加到这一个宏队列中**,但是在NodeJS中,**不同的macrotask会被放置在不同的宏队列中.**
 
 
 
 * **NodeJS中微队列主要有2个**
 
-> 1. Next Tick Queue：是放置**process.nextTick(callback)**的回调任务的
-> 2. Other Micro Queue：放置其他microtask，比如**Promise**等
+> 1. Next Tick Queue:是放置**process.nextTick(callback)**的回调任务的
+> 2. Other Micro Queue:放置其他microtask,比如**Promise**等
 
 ![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\1460000016278121.png)
 
 
 
 > 1. 执行全局Script的同步代码
-> 2. **执行microtask微任务，先执行所有Next Tick Queue中的所有任务，再执行Other Microtask Queue中的所有任务**
-> 3. 开始执行macrotask宏任务，共6个阶段，从第1个阶段开始执行相应每一个阶段macrotask中的所有任务，==注意==，这里是所有每个阶段宏任务队列的所有任务，在浏览器的Event Loop中是**只取宏队列的第一个任务**出来执行，每一个阶段的macrotask任务执行完毕后，开始执行微任务，也就是步骤2
+> 2. **执行microtask微任务,先执行所有Next Tick Queue中的所有任务,再执行Other Microtask Queue中的所有任务**
+> 3. 开始执行macrotask宏任务,共6个阶段,从第1个阶段开始执行相应每一个阶段macrotask中的所有任务,==注意==,这里是所有每个阶段宏任务队列的所有任务,在浏览器的Event Loop中是**只取宏队列的第一个任务**出来执行,每一个阶段的macrotask任务执行完毕后,开始执行微任务,也就是步骤2
 > 4. Timers Queue -> 步骤2 -> I/O Queue -> 步骤2 -> Check Queue -> 步骤2 -> Close Callback Queue -> 步骤2 -> Timers Queue ......
 > 5. 这就是Node的Event Loop
 
@@ -3446,30 +3469,30 @@ console.log(10);
 ==**总结**==
 
 ```js
-process.nexTick相当于svip，Promise相当于vip，前者永远优先后者
-在处理微任务的时候，process.nexTick全部执行完毕，再去执行Promise
+process.nexTick相当于svip,Promise相当于vip,前者永远优先后者
+在处理微任务的时候,process.nexTick全部执行完毕,再去执行Promise
 
-setTimeout(fn, 0)在Timers阶段执行，并且是在poll阶段进行判断是否达到指定的timer时间才会执行
+setTimeout(fn, 0)在Timers阶段执行,并且是在poll阶段进行判断是否达到指定的timer时间才会执行
 setImmediate(fn)在Check阶段执行
 
 setTimeout和setImmediate两者的顺序根据当前的执行环境确定
-如果两者都在主模块(main module)调用，那么执行先后取决于进程性能，顺序随机
-如果两者都不在主模块调用，即在一个I/O Circle中调用，那么setImmediate的回调永远先执行，因为会先到Check阶段。
+如果两者都在主模块(main module)调用,那么执行先后取决于进程性能,顺序随机
+如果两者都不在主模块调用,即在一个I/O Circle中调用,那么setImmediate的回调永远先执行,因为会先到Check阶段.
 
 setImmediate 对比 process.nextTick
   setImmediate(fn)的回调任务会插入到宏队列Check Queue中
   process.nextTick(fn)的回调任务会插入到微队列Next Tick Queue中
-  process.nextTick(fn)调用深度有限制，上限是1000，而setImmedaite则没有
+  process.nextTick(fn)调用深度有限制,上限是1000,而setImmedaite则没有
 
 ```
 
-> **浏览器的Event Loop和NodeJS的Event Loop是不同的，实现机制也不一样，不要混为一谈**
+> **浏览器的Event Loop和NodeJS的Event Loop是不同的,实现机制也不一样,不要混为一谈**
 >
->   浏览器可以理解成只有**1个宏任务队列**和**1个微任务队列**，先执行全局Script代码，执行完同步代码调用栈清空后，从微任务队列中依次取出所有的任务放入调用栈执行，微任务队列清空后，从宏任务队列中只取位于队首的任务放入调用栈执行，注意这里和Node的区别，只取一个，然后继续执行微队列中的所有任务，再去宏队列取一个，以此构成事件循环。
+>   浏览器可以理解成只有**1个宏任务队列**和**1个微任务队列**,先执行全局Script代码,执行完同步代码调用栈清空后,从微任务队列中依次取出所有的任务放入调用栈执行,微任务队列清空后,从宏任务队列中只取位于队首的任务放入调用栈执行,注意这里和Node的区别,只取一个,然后继续执行微队列中的所有任务,再去宏队列取一个,以此构成事件循环.
 >
-> NodeJS可以理解成有**4个宏任务队列**和**2个微任务队列**，但是执行宏任务时有6个阶段。先执行全局Script代码，执行完同步代码调用栈清空后，先从微任务队列Next Tick Queue中依次取出所有的任务放入调用栈中执行，再从微任务队列Other Microtask Queue中依次取出所有的任务放入调用栈中执行。
+> NodeJS可以理解成有**4个宏任务队列**和**2个微任务队列**,但是执行宏任务时有6个阶段.先执行全局Script代码,执行完同步代码调用栈清空后,先从微任务队列Next Tick Queue中依次取出所有的任务放入调用栈中执行,再从微任务队列Other Microtask Queue中依次取出所有的任务放入调用栈中执行.
 >
-> Node 在新版本中，也是每个 Macrotask 执行完后，就去执行 Microtask 了，和浏览器的模型一致
+> Node 在新版本中,也是每个 Macrotask 执行完后,就去执行 Microtask 了,和浏览器的模型一致
 
 ![](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\1460000022213423.png)
 

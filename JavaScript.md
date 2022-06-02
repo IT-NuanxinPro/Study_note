@@ -1287,7 +1287,7 @@ function Person () {
 
 ==原型总结图==
 
- https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E5%8E%9F%E5%9E%8B%E9%93%BE.png
+ ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E5%8E%9F%E5%9E%8B%E9%93%BE.png)
 
 
 

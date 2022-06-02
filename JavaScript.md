@@ -3542,7 +3542,83 @@ setTimeout(function() {
 
 
 
+## 八.防抖
 
+* **防抖的原理**
+
+   > **函数防抖动（debounce）**:**防止在短时间内过于频繁的执行相同的任务。 当短时间内的频繁是不必要的时候，就可以考虑去抖动，避免资源浪费，或造成不好体验**
+   >
+   > 
+   >
+   > 主要是利用一次性定时器，延迟任务的执行，在延迟这段时间内， 如果任务再次被触发，则通过 clearTimeout 销毁上一次产生的定时器， 因为定时器的被销毁，之前被延迟执行的任务也会随之被取消执行。 这样就实现了在一定时间内，只执行一次任务。这一次的执行通常是最后一次的触发， 因为此前的触发因为定时器的销毁而被取消了。
+
+   ```text
+   多次触发只执行最后一次或许就是和“节流”概念的区别？它两在作用上挺像的，在具体实现上略有不同。
+   函数防抖（debounce）是短时间内连续多次触发，但只执行最后一次，即是说将多次执行变成了只执行最后一次，执行次数减少。
+   而节流（throttle）是将短时间的多次执行，变成每隔一段时间执行一次。
+   ```
+
+* **防抖前**
+
+   ![image-20220602192253236](D:\front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\image-20220602192253236.png)
+
+* **防抖后**
+
+   ![image-20220602192454637](D:\front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\image-20220602192454637.png)
+
+
+
+* **代码实现**
+
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>防抖</title>
+    <style>
+        body{
+            height: 10000px;  /* 为了实现出现滚动条效果 */
+        }
+    </style>
+</head>
+<body>
+    <input  oninput="inpChange(event.data)" /> 
+</body>
+</html>
+<script>
+    let timer = null;
+   //实现输入框防抖
+    function inpChange(data){
+        // console.log(data);
+        clearTimeout(timer); 
+        timer = setTimeout(()=>{
+            console.log(data);
+        },1000);
+    }
+
+    // 实现监听滚动条
+    window.addEventListener('scroll',()=>{
+        // console.log('滚动条滚动了');
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log('滚动条滚动了');
+        },1000);
+    });
+    
+    //实现监听浏览器窗口大小变化
+    window.addEventListener('resize',()=>{
+        // console.log('浏览器窗口大小变化');
+        clearTimeout(timer);
+        timer = setTimeout(()=>{
+            console.log('浏览器窗口大小变化');
+        },1000);
+    });
+
+</script>
+```
 
 
 

@@ -70,7 +70,7 @@ const obj = {
 * **==总结==**
    * **一切都指向module.exports**
 
-![02dc826b2f0cf154a344ccbf8e7a8ed](https://github.com/IT-NuanxinPro/Study_note/raw/master/img/ESM.png)
+![]
 
 * **解构赋值**
 
@@ -125,7 +125,6 @@ console.log(a,b,c_val); // 1 2 3
 
 ## 3. CommonJS解决依赖地域
 
-![93c077ef551a3bd6c51eef411e1a21e](C:\Users\DEVIL~1\AppData\Local\Temp\WeChat Files\93c077ef551a3bd6c51eef411e1a21e.png)
 
 * **==main.js==**
 
@@ -394,7 +393,7 @@ console.log(a,b,c_val); // 1 2 3
 
 * ==**结果对比图**==
 
-![](D:\Front end\中软16周\暖心前端笔记\Study_note\img\ESM.png)
+![](https://github.com/IT-NuanxinPro/Study_note/blob/master/img/ESM.png)
 
 ## 6. 核心模块
 
@@ -860,7 +859,7 @@ console.log(a,b,c_val); // 1 2 3
 
    * **手写obs**
 
-  https://github.com/IT-NuanxinPro/Study_note/commit/2d2f8707959c0ba5c376dba96b090486166b8e52
+  ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/img/Observer.png)
 
    ```js
    function myTv() {
@@ -1614,7 +1613,7 @@ emitterInstance.on("error",err =>console.log("发生错误",err));
 
    ```运行结果图```
 
-​ https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E4%B8%AD%E9%97%B4%E4%BB%B6.png
+  ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E4%B8%AD%E9%97%B4%E4%BB%B6.png)
 
 * **中间件-路由**
 

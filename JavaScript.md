@@ -1543,7 +1543,7 @@ let NOW = new Date();
 * **面试题**
 
    ```js
-   //  要求写一个获取年月日时分秒的函数,返回的格式如下:2022-01-07 08:08:08
+   //  要求手写一个获取年月日时分秒的函数,返回的格式如下:2022-01-07 08:08:08
    function getDateTime(){
        let data = new Date(),
            year = data.getFullYear(),

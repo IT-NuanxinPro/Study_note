@@ -251,7 +251,6 @@ function addNode(){
 
 
 
-
 ###1.7 dom小练习
 
 * **==要求==**
@@ -985,7 +984,8 @@ let timer01 = null;
 ```
 
 * **String**
-   * **substr**: (字符串开始的索引位置,返回字符串的数量)
+  
+   * **substr**: (字符串开始的索引位置,返回字符串的数量)**==废弃==**
       * 当第一个参数为负值,处理成: 字符串长度加上负值;
       * 当第二参数为负值, 处理成  : 直接将参数为 0
    
@@ -1012,7 +1012,7 @@ let timer01 = null;
       * 当参数为负值, 处理成  不管是第一个还是第二个 ,字符串长度加上负值 ,两个进行从小到大排序所得的范围;
    
    ```js
-   let str = "hello world";   // length = 10
+   let str = "hello world";   // length = 11
               012345678910
    console.log("str",str.slice(3))   //"lo world"
    console.log("str",str.slice(3,7)) // "lo worl"
@@ -1030,13 +1030,13 @@ let timer01 = null;
 
 ```js
 //三种创建对象方式
-const person00 = new Object();
-	person00.name = "wangwu";
-	person00.say = function () {
+const person = new Object();
+	person.name = "wangwu";
+	person.say = function () {
 		return "i was wangwu"
 	}
-	console.log(person00.name);
-	console.log(person00.say());
+	console.log(person.name);
+	console.log(person.say());
 
 const person01 = {
 		name : "zhangsan",
@@ -1079,7 +1079,7 @@ function Person () {
 
    ```js
       const obj ={
-          naame:"nuanxin",
+          name:"nuanxin",
           age:22,
           score:100 
       }   
@@ -1110,7 +1110,7 @@ function Person () {
    
    // 需求,动态能获取obj对象的age属性值和修改age属性值(根据number值的变化)
      let number = 18;
-     const 0bj = {
+     const obj = {
          name:"暖心",
          sex:男,
      }
@@ -1174,7 +1174,7 @@ function Person () {
               }
       ```
    
-   * 通过构造器区实例化 instance
+   * 通过构造器实例化 instance
    
    * 最后把 instance 赋值给 c
    
@@ -1561,8 +1561,26 @@ let NOW = new Date();
    
        return year + '-' + month + '-' + day + ' ' + hour + ':' + minute + ':' + second;
    }
+   
+   //优化
+   function getDateTime() {
+       let date = new Date(),
+           year = date.getFullYear(),
+           month = date.getMonth() + 1,
+           day = date.getDate(),
+           hour = date.getHours(),
+           minute = date.getMinutes(),
+           second = date.getSeconds();
+       
+       const formatNumber = n => {
+           n = n.toString();
+           return n[1] ? n : '0' + n; //如果是一位数，则前面补0
+       }
+       return [year, month, day].map(formatNumber).join('-') + ' '
+           + [hour, minute, second].map(formatNumber).join(':');
+   }
    ```
-
+   
    
 
 
@@ -1582,7 +1600,7 @@ let NOW = new Date();
 	     g - global ;
 	     i - 大小写不敏感
 	     m - 支持换行
-	     y - 粘附模式 lastIndex
+	     y - 粘附模式 lastIndex  
 	     u - unicode
 */
 
@@ -2080,7 +2098,7 @@ const arr9 = Array.from([1,2,3],function (val) {
 * **==Array.of()==可以把⼀组参数转换为数组**
 
 ```js
-console.log(Array.og(a,b,c,d));  //[a.b.c.d]
+console.log(Array.of(a,b,c,d));  //[a.b.c.d]
 ```
 
 
@@ -2859,7 +2877,7 @@ function outer(a){
            res++
             console.log(res);  //1
       }
-        eturn sum
+        return sum
    }
    const a = acc();
    a();
@@ -3011,7 +3029,7 @@ Promise(期约)
 // p是实例
 const p = new Promise((resolve,rejecct)=>{});
 
-const p = new Promisr((resolve,reject)=>{
+const p = new Promise((resolve,reject)=>{
    resolve();
    reject(); // 虽然读取了这一步,但是不执行操作,没有任何效果
 })
@@ -3585,42 +3603,146 @@ setTimeout(function() {
     </style>
 </head>
 <body>
-    <input  oninput="inpChange(event.data)" /> 
+     <input type="text" />
 </body>
 </html>
 <script>
-    let timer = null;
-   //实现输入框防抖
-    function inpChange(data){
-        // console.log(data);
-        clearTimeout(timer); 
-        timer = setTimeout(()=>{
-            console.log(data);
-        },1000);
-    }
+     let input = document.querySelector('input');
+     
+     function debounce(fn, delay) {
+		let timer = null;
+		return function () {
+			let context = this;
+			let args = arguments;
+			console.log(context)
+			clearTimeout(timer); // 每次触发时先清除定时器，然后重写设置
+			timer = setTimeout(function () {
+				fn.apply(context, args); // 用apply指向调用debounce的对象，相当于this.fn
+			}, delay)
+		}
+	}
+
+    input.addEventListener('input', debounce(function (e) {
+		console.log(e.target.value);
+	}, 1000));
+    
+    
+
 
     // 实现监听滚动条
-    window.addEventListener('scroll',()=>{
-        // console.log('滚动条滚动了');
-        clearTimeout(timer);
-        timer = setTimeout(()=>{
-            console.log('滚动条滚动了');
-        },1000);
-    });
+    window.addEventListener('scroll',debounce(function(){
+        console.log("我被触发了")                         
+   },1000));
     
     //实现监听浏览器窗口大小变化
-    window.addEventListener('resize',()=>{
-        // console.log('浏览器窗口大小变化');
-        clearTimeout(timer);
-        timer = setTimeout(()=>{
-            console.log('浏览器窗口大小变化');
-        },1000);
-    });
+    window.addEventListener('resize',debounce(function(){
+        console.log('浏览器窗口大小变化');
+    },1000));
+
+    
 
 </script>
 ```
 
+## 九.节流
 
+* **节流的原理**
 
+> **在一段时间内，当持续触发事件时，保证隔间时间触发一次事件。**
 
+```js
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>throttle</title>
+	<style>
+		h1 {
+			height: 3000px;
+		}
+		
+		#btn {
+			display: none;
+			position: fixed;
+			bottom: 200px;
+			right: 200px;
+		}
+	</style>
+</head>
+<body>
+<h1>这是一个长页面</h1>
+<button id="btn">回到顶部</button>
+<script>
+	//版本1(程序启动时就执行)
+		let btn = document.querySelector('#btn');
+		
+		function throttle(fn, delay) {
+			let record = Date.now();
+			return function () {
+				let context = this;
+				let args = arguments;
+				let now = Date.now();
+				if (now - record >= delay) {
+					fn.apply(context, args);
+					record = now;
+				}
+			}
+		}
+		
+		function onscrollShowBtn() {
+			let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+			console.log(scrollTop);
+			if (scrollTop > 1000) {
+				btn.style.display = 'block';
+			} else {
+				btn.style.display = 'none';
+			}
+		}
+		
+		window.onscroll = throttle(onscrollShowBtn, 1500);
+	
+	
+	//版本2(用户触发事件时才执行)
+	let btn = document.querySelector('#btn');
+	
+	
+	function throttle(fn, delay) {
+		let timer = null;
+		return function () {
+			let context = this;
+			let args = arguments;
+			if (!timer) {
+				timer = setTimeout(function () {
+					fn.apply(context, args);
+					timer = null; //执行完后清空定时器
+				}, delay)
+			}
+		}
+	}
+	
+	function onscrollShowBtn() {
+		let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+		console.log(scrollTop);
+		if (scrollTop > 1000) {
+			btn.style.display = 'block';
+		} else {
+			btn.style.display = 'none';
+		}
+	}
+	
+	window.onscroll = throttle(onscrollShowBtn, 1500);
 
+</script>
+</body>
+</html>
+```
+
+**注意**
+
+* 版本1和版本2 的区别：时间戳版(版本1)的函数触发是在时间段内开始的时候，而定时器版(版本2)的函数触发是在时间段内结束的时候。
+
+   
+
+   ![image-20220828142520778](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\微信图片_20220828142446.jpg)
+
+<img src="D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\image-20220828142547959.png" alt="image-20220828142547959" style="zoom:80%;" />

@@ -3743,6 +3743,7 @@ setTimeout(function() {
 
    
 
-   ![image-20220828142520778](D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\微信图片_20220828142446.jpg)
+   ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/image-20220828142547959.png)
+   ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220828142446.jpg)
 
-<img src="D:\Front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\image-20220828142547959.png" alt="image-20220828142547959" style="zoom:80%;" />
+

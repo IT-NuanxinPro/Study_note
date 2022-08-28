@@ -1287,7 +1287,7 @@ function Person () {
 
 ==原型总结图==
 
- https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E5%8E%9F%E5%9E%8B%E9%93%BE.png
+ ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/img/%E5%8E%9F%E5%9E%8B%E9%93%BE.png)
 
 
 
@@ -3560,11 +3560,11 @@ setTimeout(function() {
 
 * **防抖前**
 
-   ![image-20220602192253236](D:\front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\image-20220602192253236.png)
+   ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/image-20220602192253236.png)
 
 * **防抖后**
 
-   ![image-20220602192454637](D:\front end\中软16周\暖心前端笔记\Study_note\JavaScript.assets\image-20220602192454637.png)
+   ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/image-20220602192454637.png)
 
 
 

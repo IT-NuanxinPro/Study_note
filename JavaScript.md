@@ -3756,6 +3756,7 @@ setTimeout(function() {
 
    > 深拷贝是将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且**修改新对象不会影响原对象**。
 
+![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D%E5%AF%B9%E6%AF%94.png)
 
 
 ### 赋值和深/浅拷贝的区别
@@ -3897,4 +3898,6 @@ console.log(obj11);  // {a: 1, b: 2, c: {d: 1}}
 console.log(obj12);  // {a: 1, b: 2, c: {d: 6}}
 
 ```
+![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/%E6%B5%85%E6%8B%B7%E8%B4%9D.png)
+![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/%E6%B7%B1%E6%8B%B7%E8%B4%9D.png)
 

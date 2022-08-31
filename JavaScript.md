@@ -3746,4 +3746,155 @@ setTimeout(function() {
    ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/image-20220828142547959.png)
    ![](https://github.com/IT-NuanxinPro/Study_note/blob/master/JavaScript.assets/%E5%BE%AE%E4%BF%A1%E5%9B%BE%E7%89%87_20220828142446.jpg)
 
+## 十. 深拷贝和浅拷贝
+
+* **浅拷贝**
+
+   > 浅拷贝是创建一个新对象，这个对象有着原始对象属性值的一份精确拷贝。如果属性是基本类型，拷贝的就是基本类型的值，如果属性是引用类型，拷贝的就是内存地址 ，所以**如果其中一个对象改变了这个地址，就会影响到另一个对象**。
+
+* **深拷贝**
+
+   > 深拷贝是将一个对象从内存中完整的拷贝一份出来,从堆内存中开辟一个新的区域存放新对象,且**修改新对象不会影响原对象**。
+
+
+
+### 赋值和深/浅拷贝的区别
+
+* 当我们把一个对象赋值给一个新的变量时，**赋的其实是该对象的在栈中的地址，而不是堆中的数据**。也就是两个对象指向的是同一个存储空间，无论哪个对象发生改变，其实都是改变的存储空间的内容，因此，两个对象是联动的。
+* 浅拷贝：重新在堆中创建内存，拷贝前后对象的基本数据类型互不影响，但拷贝前后对象的引用类型因共享同一块内存，会相互影响
+* 深拷贝：从堆内存中开辟一个新的区域存放新对象，对对象中的子对象进行递归拷贝,拷贝前后的两个对象互不影响。
+
+```js
+// 对象赋值
+const obj1 = {
+    a: 1,
+    b: 2
+}
+
+const obj2 = obj1;
+obj2.a = 3;
+
+console.log(obj1);  // {a: 3, b: 2}
+console.log(obj2)   // {a: 3, b: 2}
+
+// 浅拷贝1
+const obj3 = {
+    a: 1,
+    b: 2
+}
+let obj4 = shallowCopy(obj3);
+obj4.a = 3;
+
+function shallowCopy(obj) {
+    let newObj = {};
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) {
+            newObj[key] = obj[key];
+        }
+    }
+    return newObj;
+}
+
+console.log(obj3);  // {a: 1, b: 2}
+console.log(obj4);  // {a: 3, b: 2}
+
+// 浅拷贝2(Object.assign)
+const obj5 = {
+    a: 1,
+    b: 2
+};
+let obj6 = Object.assign(({}, obj5));
+obj6.a = 3;
+console.log(obj5);  // {a: 1, b: 2}
+console.log(obj6);  // {a: 3, b: 2}
+
+//浅拷贝3(...展开运算符)
+const obj7 = {
+    a: 1,
+    b: 2
+}
+let obj8 = {...obj7};
+obj8.a = 3;
+console.log(obj7);  // {a: 1, b: 2}
+
+//浅拷贝4(Array.prototype.slice)
+const arr1 = [1, 2, 3];
+let arr2 = arr1.slice();
+arr2[0] = 4;
+console.log(arr1);  // [1, 2, 3]
+console.log(arr2);  // [4, 2, 3]
+
+//浅拷贝5(Array.prototype.concat)
+const arr3 = [1, 2, 3];
+let arr4 = arr3.concat();
+arr4[0] = 4;
+console.log(arr3);  // [1, 2, 3]
+console.log(arr4);  // [4, 2, 3]
+
+//浅拷贝6(Array.from)
+const arr5 = [1, 2, 3];
+let arr6 = Array.from(arr5);
+arr6[0] = 4;
+console.log(arr5);  // [1, 2, 3]
+console.log(arr6);  // [4, 2, 3]
+
+//深拷贝1(JSON.parse(JSON.stringify(obj)))
+const obj9 = {
+    a: 1,
+    b: 2,
+    c: {
+        d: 1,
+    }
+}
+let obj10 = JSON.parse(JSON.stringify(obj9));
+// let obj10 = Object.assign({}, obj9);
+obj10.a = 3;
+obj10.c.d = 2;
+console.log(obj9);  // {a: 1, b: 2, c: {d: 1}}
+console.log(obj10);  // {a: 3, b: 2, c: {d: 2}}
+/*这种方法虽然可以实现数组或对象深拷贝,但不能处理函数和正则,
+因为这两者基于JSON.stringify和JSON.parse处理后,
+得到的正则就不再是正则(变为空对象)、map、Set,得到的函数就不再是函数(变为null)了
+2,.无法处理环形对象
+*/
+
+//深拷贝2(递归)
+const obj11 = {
+    a: 1,
+    b: 2,
+    c: {
+        d: 1,
+    }
+}
+
+const obj12 = deepClone(obj11);
+obj12.c.d = 6;
+obj12.o = obj11; // 为了测试环形对象
+
+//采用WeakMap解决循环引用问题
+function deepClone(obj, hash = new WeakMap) {
+    if (obj === null || typeof obj !== 'object') { // 如果不是对象或者是null,直接返回
+        return obj;
+    }
+    if (obj instanceof Date) return new Date(obj); // 日期对象直接返回一个新的日期对象
+    if (obj instanceof RegExp) return new RegExp(obj); // 正则对象直接返回一个新的正则对象
+    
+    let newObj = obj instanceof Array ? [] : {}; // 判断是否是数组
+    if (hash.has(obj)) { // 判断是否已经缓存过
+        return hash.get(obj); // 如果缓存过,返回缓存的值
+    }
+    hash.set(obj, newObj); // 如果没有缓存则缓存
+    for (let key in obj) {
+        if (obj.hasOwnProperty(key)) { //对象自身的属性才拷贝,不拷贝原型上的属性
+            newObj[key] = deepClone(obj[key], hash); // 递归复制
+        }
+    }
+    return newObj;
+}
+
+
+console.log(obj11);  // {a: 1, b: 2, c: {d: 1}}
+console.log(obj12);  // {a: 1, b: 2, c: {d: 6}}
+
+```
 
